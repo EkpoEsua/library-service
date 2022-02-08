@@ -41,7 +41,7 @@ class BookBorrowSerializer(serializers.ModelSerializer):
                 "help_text": "Registered email address of user.",
                 "required": True,
             },
-            "borrow_duration": {"required":True}
+            "borrow_duration": {"required": True},
         }
 
     def update(self, instance: Book, validated_data):

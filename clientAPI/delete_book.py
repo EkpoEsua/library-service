@@ -8,11 +8,10 @@ import pika
 import json
 from books.models import Book
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host="broker"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="broker"))
 channel = connection.channel()
 
-exchange_topic =  "client_commands"
+exchange_topic = "client_commands"
 channel.exchange_declare(exchange=exchange_topic, exchange_type="topic")
 
 result = channel.queue_declare("", exclusive=True)
@@ -26,6 +25,7 @@ def delete_book(ch, method, properties, id: bytes):
     id = int(id)
     book: Book = Book.objects.get(pk=id)
     book.delete()
+
 
 channel.basic_consume(queue=queue_name, on_message_callback=delete_book, auto_ack=True)
 

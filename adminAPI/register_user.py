@@ -8,11 +8,10 @@ import pika
 import json
 from user.models import User
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host="broker"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="broker"))
 channel = connection.channel()
 
-exchange_topic =  "admin_commands"
+exchange_topic = "admin_commands"
 channel.exchange_declare(exchange=exchange_topic, exchange_type="topic")
 
 result = channel.queue_declare("", exclusive=True)
@@ -27,6 +26,8 @@ def register_new_user(ch, method, properties, data: str):
     user = User.objects.create(**user_data)
 
 
-channel.basic_consume(queue=queue_name, on_message_callback=register_new_user, auto_ack=True)
+channel.basic_consume(
+    queue=queue_name, on_message_callback=register_new_user, auto_ack=True
+)
 
 channel.start_consuming()

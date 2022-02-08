@@ -6,7 +6,6 @@ import json
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = (
@@ -14,7 +13,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
         )
-    
+
     def save(self, **kwargs):
         instance: User = super().save(**kwargs)
         instance_dict: dict = instance.__dict__

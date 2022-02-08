@@ -93,5 +93,5 @@ class AdminAPITestCase(APITestCase):
                 },
             ],
         }
-        
+
         self.assertEqual(response_data["results"][0], squid_data)

@@ -5,7 +5,6 @@ from source import emit_command
 
 
 class BookListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Book
         fields = (
@@ -19,8 +18,8 @@ class BookListSerializer(serializers.ModelSerializer):
             "borrower",
         )
 
-class BookCreateSerializer(serializers.ModelSerializer):
 
+class BookCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = (
@@ -28,7 +27,7 @@ class BookCreateSerializer(serializers.ModelSerializer):
             "publisher",
             "category",
         )
-    
+
     def save(self, **kwargs):
         instance: Book = super().save(**kwargs)
         instance_dict: dict = instance.__dict__
@@ -38,15 +37,14 @@ class BookCreateSerializer(serializers.ModelSerializer):
 
 
 class BookBorrowSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Book
         fields = (
             "borrow_duration",
             "borrower",
         )
-        extra_kwargs = {"borrower" : {"help_text": "Registered email address of user."}}
-    
+        extra_kwargs = {"borrower": {"help_text": "Registered email address of user."}}
+
     def update(self, instance: Book, validated_data):
         instance.status = "b"
         instance: Book = super().update(instance, validated_data)

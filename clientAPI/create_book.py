@@ -8,11 +8,10 @@ import pika
 import json
 from books.models import Book
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host="broker"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="broker"))
 channel = connection.channel()
 
-exchange_topic =  "client_commands"
+exchange_topic = "client_commands"
 channel.exchange_declare(exchange=exchange_topic, exchange_type="topic")
 
 result = channel.queue_declare("", exclusive=True)
@@ -27,7 +26,9 @@ def create_new_book(ch, method, properties, data: str):
     book_data = json.loads(data)
     book = Book.objects.create(**book_data)
 
-channel.basic_consume(queue=queue_name, on_message_callback=create_new_book, auto_ack=True)
+
+channel.basic_consume(
+    queue=queue_name, on_message_callback=create_new_book, auto_ack=True
+)
 
 channel.start_consuming()
-

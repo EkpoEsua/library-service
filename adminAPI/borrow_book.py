@@ -9,11 +9,10 @@ import json
 from books.models import Book
 from user.models import User
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host="broker"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="broker"))
 channel = connection.channel()
 
-exchange_topic =  "admin_commands"
+exchange_topic = "admin_commands"
 channel.exchange_declare(exchange=exchange_topic, exchange_type="topic")
 
 result = channel.queue_declare("", exclusive=True)
@@ -21,7 +20,13 @@ queue_name = result.method.queue
 binding_key = "adminapi.borrow_book"
 channel.queue_bind(exchange=exchange_topic, queue=queue_name, routing_key=binding_key)
 
-def borrow_book(ch, method, properties, data: str,):
+
+def borrow_book(
+    ch,
+    method,
+    properties,
+    data: str,
+):
     """Mark a book as borrowed."""
     borrow_data = json.loads(data)
     book_to_borrow: Book = Book.objects.get(pk=int(borrow_data["id"]))
@@ -30,6 +35,7 @@ def borrow_book(ch, method, properties, data: str,):
     user = User.objects.get(email=borrow_data["borrower_id"])
     book_to_borrow.borrower = user
     book_to_borrow.save()
+
 
 channel.basic_consume(queue=queue_name, on_message_callback=borrow_book, auto_ack=True)
 

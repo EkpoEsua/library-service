@@ -73,12 +73,12 @@ class ClientAPITestCase(APITestCase):
         book: Book = Book.objects.get(pk=1)
         self.assertEqual(book.status, "a")
         url = reverse("borrow-book", kwargs={"pk": 1})
-        data = {
-            "borrow_duration": 5,
-            "borrower": "squidward.t@kk.com"}
+        data = {"borrow_duration": 5, "borrower": "squidward.t@kk.com"}
         response = self.client.put(url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         borrowed_book: Book = Book.objects.get(pk=1)
         self.assertEqual(borrowed_book.status, "b")
         self.assertEqual(borrowed_book.borrow_duration, 5)
-        self.assertEqual(borrowed_book.due_back, timezone.now().date() + timezone.timedelta(days=5))
+        self.assertEqual(
+            borrowed_book.due_back, timezone.now().date() + timezone.timedelta(days=5)
+        )

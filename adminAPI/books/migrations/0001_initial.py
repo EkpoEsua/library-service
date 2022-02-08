@@ -9,24 +9,53 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+        ("user", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Book',
+            name="Book",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=150)),
-                ('status', models.CharField(choices=[('b', 'Borrowed'), ('a', 'Available')], default='a', max_length=1)),
-                ('publisher', models.CharField(max_length=50)),
-                ('category', models.CharField(max_length=50)),
-                ('due_back', models.DateField(blank=True, null=True)),
-                ('borrow_duration', models.IntegerField(help_text='Borrow duration in days.', null=True)),
-                ('borrower', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='borrowed_books', to='user.user', to_field='email')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=150)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("b", "Borrowed"), ("a", "Available")],
+                        default="a",
+                        max_length=1,
+                    ),
+                ),
+                ("publisher", models.CharField(max_length=50)),
+                ("category", models.CharField(max_length=50)),
+                ("due_back", models.DateField(blank=True, null=True)),
+                (
+                    "borrow_duration",
+                    models.IntegerField(
+                        help_text="Borrow duration in days.", null=True
+                    ),
+                ),
+                (
+                    "borrower",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="borrowed_books",
+                        to="user.user",
+                        to_field="email",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['id'],
+                "ordering": ["id"],
             },
         ),
     ]

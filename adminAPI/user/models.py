@@ -10,4 +10,3 @@ class User(models.Model):
 
     class Meta:
         ordering = ["id"]
-
