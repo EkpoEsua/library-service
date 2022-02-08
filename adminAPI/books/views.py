@@ -36,7 +36,8 @@ class BookDeleteView(generics.DestroyAPIView):
 
 
 class BorrowedBooksListView(generics.ListAPIView):
-    """List of borrowed books in the catalogue."""
+    """List the books that are not available for borrowing (showing the day it will be available)
+    """
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
 

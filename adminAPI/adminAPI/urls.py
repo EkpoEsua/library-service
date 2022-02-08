@@ -14,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from adminAPI.schema import schema_view
+from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("users/", include("user.urls")),
     path("books/", include("books.urls")),
-]
+    path("openapi/", schema_view, name="openapi-schema"),
+    path(
+        "",
+        TemplateView.as_view(
+            template_name="swagger-ui.html",
+            extra_context={"schema_url": "openapi-schema"},
+        ),
+        name="swagger-ui",
+    ),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

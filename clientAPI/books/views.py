@@ -4,7 +4,7 @@ from books import filters
 from books.models import Book
 
 class BookListView(generics.ListAPIView):
-    """List all books available in the catalogue, depending on get query parameter."""
+    """List all books available in the catalogue, or depending on get query parameter."""
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
     filter_backends = [filters.PublisherFilter, filters.CategoryFilter]
@@ -27,6 +27,10 @@ class BookBorrowView(generics.UpdateAPIView):
     """Borrow book from the catalogue supplying the register email of the user"""
     queryset = Book.objects.all()
     serializer_class = BookBorrowSerializer
+
+    @property
+    def allowed_methods(self):
+        return ["PUT"]
 
     def patch(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)

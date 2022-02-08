@@ -6,8 +6,8 @@
 
 ## Admin API
 
-adminAPI - http://127.0.0.1:8000
+adminAPI(Swagger Docs) - http://127.0.0.1:8000
 
 ## Client API
 
-clientAPI - http://127.0.0.1:9000
+clientAPI(Swagger Docs) - http://127.0.0.1:9000
