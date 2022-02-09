@@ -2,7 +2,7 @@
 
 ## Run services
 
-```docker-compose -f up --build```
+```docker-compose up --build```
 
 ## Admin API
 
