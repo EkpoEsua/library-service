@@ -18,6 +18,8 @@ services:
     command: ./start.sh
     ports:
       - "8000:8000"
+    # volumes:
+    #   - ./adminAPI:/app
     depends_on:
       broker:
         condition: service_healthy
@@ -28,6 +30,8 @@ services:
     command: ./start.sh
     ports:
       - "9000:9000"
+    # volumes:
+    #   - ./clientAPI:/app
     depends_on:
       broker:
         condition: service_healthy

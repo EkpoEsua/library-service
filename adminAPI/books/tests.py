@@ -46,12 +46,6 @@ class AdminAPITestCase(APITestCase):
         }
         response = self.client.post(url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        response_data = {
-            "title": "Mermaid Man and Barnacle Boy",
-            "publisher": "Paul",
-            "category": "superhero",
-        }
-        self.assertEqual(response.data, response_data)
         self.assertEqual(Book.objects.count(), 4)
         stored_book: Book = Book.objects.all()[3]
         self.assertEqual(stored_book.title, "Mermaid Man and Barnacle Boy")

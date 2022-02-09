@@ -57,7 +57,11 @@ class AdminAPITestCase(APITestCase):
             "first_name": first_user.first_name,
             "last_name": first_user.last_name,
         }
-        self.assertEqual(dict(response.data["results"][0]), first_user_dict)
+        user_data = response.data["results"][0]
+        self.assertEqual(user_data["email"], first_user_dict["email"])
+        self.assertEqual(user_data["first_name"], first_user_dict["first_name"])
+        self.assertEqual(user_data["last_name"], first_user_dict["last_name"])
+        self.assertEqual(user_data["id"], 1)
 
     def test_list_of_registered_users_and_borrowed_books(self):
         """Test user list and books they have borrowed."""

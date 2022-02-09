@@ -23,10 +23,29 @@ class BookCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = (
+            "id",
             "title",
+            "status",
             "publisher",
             "category",
+            "due_back",
+            "borrow_duration",
+            "borrower",
         )
+        extra_kwargs = {
+            "status": {
+                "read_only":True
+            },
+            "due_back": {
+                "read_only":True
+            },
+            "borrow_duration": {
+                "read_only":True
+            },
+            "borrower": {
+                "read_only":True
+            }
+        }
 
     def save(self, **kwargs):
         instance: Book = super().save(**kwargs)
